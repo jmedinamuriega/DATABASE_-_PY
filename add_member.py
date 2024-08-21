@@ -23,10 +23,20 @@ def add_member(name, age, trainer_id):
     except Exception as e:
         print(f"Error adding member: {e}")
         conn.rollback() 
+def add_workout_session(member_id, date, duration_minutes, calories_burned):
+    try:
+        query = "INSERT INTO workout (member_id, date, duration_minutes, calories_burned) VALUES (%s, %s, %s, %s)"
+        cursor.execute(query, (member_id, date, duration_minutes, calories_burned))
+        conn.commit()
+        print("Workout session added successfully.")
+    except Exception as e:
+        print(f"Error adding workout session: {e}")
+        conn.rollback()
+
+
 
 if conn is not None:
     try:
-        #add_trainer
         trainer_id = add_trainer("pepe", 35)
         if trainer_id:
             add_member("Raul", 55, trainer_id)
